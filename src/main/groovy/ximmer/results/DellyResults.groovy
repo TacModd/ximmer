@@ -13,7 +13,7 @@ class DellyResults extends CNVResults {
 		this.sample = sample ? sample : getSampleFromFile(sourceFile)
 		
 		VCF.parse(this.sourceFile) {
-            if(!(it.info.SVTYPE in ['DEL','DUP'])) {
+            if(!(it.info.SVTYPE in ['DEL','DUP','INV'])) {
                 return false
             }
             

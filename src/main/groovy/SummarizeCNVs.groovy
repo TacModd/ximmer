@@ -159,6 +159,7 @@ class SummarizeCNVs {
             savvy 'Savvy CNV results', args:Cli.UNLIMITED
             delly 'Delly results', args:Cli.UNLIMITED
             lumpy 'Lumpy results', args:Cli.UNLIMITED
+            sniffle 'Sniffles results', args:Cli.UNLIMITED
             schism 'Schism results',args:Cli.UNLIMITED
             truth 'Postiive control CNVs', args:1
             vcf 'VCF file containing variants for a sample in results', args:Cli.UNLIMITED
@@ -385,6 +386,10 @@ class SummarizeCNVs {
 
         if(opts.savvy)
             parseCallerOpt("savvy", opts.savvys, { fileName -> new SavvyCNVResults(fileName, targetRegions) }, results)
+
+        if(opts.sniffle)
+            parseCallerOpt("snf", opts.sniffles, { fileName -> new SnifflesResults(fileName) }, results)
+
 
         if(opts.truth)
             results.truth = new PositiveControlResults(opts.truth).load()
@@ -1147,6 +1152,11 @@ class SummarizeCNVs {
 
             it.getAlleleDepths(1)[sampleIndex] / (float)refDepth
         })
+        
+        // TODO: are there any rare high or moderate impact variants within 
+        // any of the genes spanned by the CNV?
+        
+        
         return sample
     }
 }
